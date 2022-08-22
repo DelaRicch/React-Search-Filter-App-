@@ -3,13 +3,13 @@ import { Data } from "./Data";
 
 function App() {
 
-  const [search, setSearch] = useState 
+  const [search, setSearch] = useState('') 
 
   return (
     <div className="app">
       <h1>Contact Form</h1>
       <form>
-        <input type="search" placeholder="Search Contact" />
+        <input onChange={(e) => setSearch(e.target.value)} type="search" placeholder="Search Contact" />
       </form>
       <table>
         <thead>
@@ -22,7 +22,10 @@ function App() {
         </thead>
         <tbody>
           {
-            Data.map(item => (
+            Data.filter(item => {
+              return search.toLowerCase() === '' ? item : item.first_name.includes(search) 
+            })
+            .map(item => (
             <tr key={item.id}>
               <td>{item.first_name}</td>
               <td>{item.last_name}</td>
